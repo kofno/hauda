@@ -3,9 +3,7 @@
  */
 const storageAvailable = (storage?: Storage) => {
   try {
-    console.log('CHECKING STORAGE', storage);
     if (!storage) return false;
-    console.log('STORAGE AVAILABLE');
     const x = '__storage_test__';
     storage.setItem(x, x);
     storage.removeItem(x);
