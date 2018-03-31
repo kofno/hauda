@@ -915,11 +915,46 @@ img { max-width: 100%; }
 	<div class="content-wrap">
 		<div class="tsd-panel tsd-typography">
 			<h1 id="hauda">hauda</h1>
+			<p><a href="https://travis-ci.org/kofno/hauda"><img src="https://travis-ci.org/kofno/hauda.svg?branch=master" alt="Build Status"></a>
+			<a href="https://github.com/semantic-release/semantic-release"><img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=plastic" alt="semantic-release"></a></p>
 			<blockquote>
 				<p>“hoard, store”</p>
 				<p>Translated from Telerin</p>
 			</blockquote>
 			<p>Synchronize a value in web storage using RxJS.</p>
+			<h1 id="install">Install</h1>
+			<pre><code> yarn <span class="hljs-keyword">add</span><span class="bash"> hauda</span>
+</code></pre><h1 id="usage">Usage</h1>
+			<pre><code><span class="hljs-keyword">import</span> { StoredValueSubject } <span class="hljs-keyword">from</span> <span class="hljs-string">'hauda'</span>;
+<span class="hljs-keyword">import</span> { storedValue, noValue } <span class="hljs-keyword">from</span> <span class="hljs-string">'hauda/Types'</span>;
+
+<span class="hljs-keyword">const</span> watchedValue = <span class="hljs-keyword">new</span> StoredValueSubject({ <span class="hljs-attr">key</span>: <span class="hljs-string">'a-value'</span> });
+
+watchedValue.subscribe(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(v));
+watchedValue.next(storedValue(<span class="hljs-string">'foo'</span>));
+watchedValue.next(noValue());
+</code></pre><h1 id="overview">Overview</h1>
+			<p>Webstorage is a useful tool for persisting state in the users browser.
+				It is also useful for communicating between a user&#39;s different tabs and
+				windows (using localStorage). However, keeping the value on the current page
+				in sync with the value in localStorage AND and keeping all the open windows
+			in sync can be frustrating.</p>
+			<p>Hauda provides an RxJS Subject that can be observed for changes. Since it is
+			based on a BehaviorSubject, the last value in the stream is always available.</p>
+			<p>Internally, Hauda subscribes to a stream of events from web storage. It uses
+			this to track the changes in storage.</p>
+			<p>The current page can update the stream by pushing the <code>next</code> value into the
+			subject. Internally, this value will be written to storage.</p>
+			<p>Sometimes you might want to &quot;mute&quot; the value, so changes won&#39;t be reported.
+				Calling mute will stop the stream from updating, including not performing
+			updates to storage.</p>
+			<h2 id="localstorage-and-sessionstorage">localStorage and sessionStorage</h2>
+			<p>localStorage is the default webstorage used in hauda. Instantiating the
+			subject with a <code>key</code> is all that is needed to configure it for localStorage.</p>
+			<p>Any other implementation of webstorage can be passed, and that storage
+			mechanism will be used. To use session storage:</p>
+			<pre><code><span class="hljs-keyword">const</span> sessionValue = <span class="hljs-keyword">new</span> StoredValueSubject({key: <span class="hljs-string">'a-value'</span>, storage: <span class="hljs-built_in">window</span>.sessionStorage });
+</code></pre><p>This will persist the value in sessions storage, rather then localStorage.</p>
 		</div>
 		<div style="position:relative;"><a name="typedoc-main-index" class="tsd-anchor"></a></div>
 		<section class="tsd-panel-group tsd-index-group">

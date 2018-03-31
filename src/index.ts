@@ -5,6 +5,7 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import { StoredValue, unknown, storageError, storedValue, noValue } from './Types';
 import storageAvailable from './StorageAvailable';
+import { Subscription } from 'rxjs/Subscription';
 
 export interface Options {
   key: string;
@@ -26,7 +27,7 @@ export class StoredValueSubject extends BehaviorSubject<StoredValue> {
     this.storage = options.storage || window.localStorage;
     super.next(this.getValueFromStorage());
     this.storage$ = this.storageStream();
-    this.storage$.subscribe(v => super.next(v));
+    this.subscriptions.push(this.storage$.subscribe(v => super.next(v)));
   }
 
   /**
@@ -50,6 +51,11 @@ export class StoredValueSubject extends BehaviorSubject<StoredValue> {
         this.writeValue(value);
         super.next(value);
     }
+  }
+
+  public unsubscribe() {
+    this.subscriptions.forEach(s => s.unsubscribe());
+    super.unsubscribe();
   }
 
   public mute() {
@@ -91,5 +97,6 @@ export class StoredValueSubject extends BehaviorSubject<StoredValue> {
   private key: string;
   private storage: Storage;
   private storage$: Observable<StoredValue>;
+  private subscriptions: Subscription[] = [];
   private muted: boolean;
 }
