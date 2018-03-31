@@ -1,6 +1,6 @@
 {
   "name": "hauda",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "description": "Synchronize values with web storage, and observe them with MobX",
   "main": "index.js",
   "repository": "https://github.com/kofno/hauda",
@@ -10,7 +10,7 @@
     "docs": "typedoc --out docs --theme minimal && touch docs/.nojekyll",
     "test": "karma start --single-run --browsers Firefox",
     "build": "tsc",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "semantic-release": "npx semantic-release"
   },
   "devDependencies": {
     "@types/es6-promise": "^3.3.0",
