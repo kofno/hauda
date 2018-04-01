@@ -1,7 +1,7 @@
 {
   "name": "hauda",
   "version": "0.0.0-development",
-  "description": "Synchronize values with web storage, and observe them with MobX",
+  "description": "Synchronize values with web storage and make them observable",
   "main": "index.js",
   "repository": "https://github.com/kofno/hauda",
   "author": "Ryan L. Bell <ryan.l.bell@gmail.com>",
